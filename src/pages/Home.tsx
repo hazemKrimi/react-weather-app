@@ -100,8 +100,6 @@ const Home: React.FC = () => {
     const [ forecast, setForecast ] = useState<Forecast | null>(null);
     const [ loading, setLoading ] = useState<boolean>(true);
     const [ error, setError ] = useState<string>('');
-    const [ dailyForecastPosition, setDailyForecastPosition ] = useState<number>(0);
-    const [ hourlyForecastPosition, setHourlyForecastPosition ] = useState<number>(0);
 
     useEffect(() => {
         if (!navigator.geolocation) setError('Geolocation not supported in this browser! Try searching for a city instead');
