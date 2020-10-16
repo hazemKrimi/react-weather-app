@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
 
     return (
         <Nav>
-            <h1 onClick={() => history.push('/')}>Weather</h1>
+            <h1 onClick={() => history.push('/home')}>Weather</h1>
             <SearchBar />
         </Nav>
     );

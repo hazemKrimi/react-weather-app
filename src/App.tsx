@@ -20,6 +20,9 @@ const App: React.FC = () => {
           <Route path='/' exact>
             <Home />
           </Route>
+          <Route path='/home' exact>
+            <Home />
+          </Route>
           <Route path='/search/:query'>
             <Search />
           </Route>
