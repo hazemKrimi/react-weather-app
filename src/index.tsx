@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/react-weather-app'>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
