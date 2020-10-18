@@ -130,7 +130,6 @@ const Home: React.FC = () => {
                     setLoading(false);
                 } catch (err) {
                     setLoading(false);
-                    console.error(err);
                     setError('Could not get weather data! Try again later');
                 }
             },
@@ -158,7 +157,7 @@ const Home: React.FC = () => {
                                 date={new Date(weather.timestamp * 1000)}
                                 time={false}
                                 data={weather.main.temp + '°C'}
-                                temp={weather.main.temp > 35 ? 'hot' : weather.main.temp < 20 ? 'cold' : null}
+                                temp={weather.main.temp > 25 ? 'hot' : weather.main.temp < 20 ? 'cold' : null}
                                 icon={weather.icon}
                                 description={weather.description}
                             />
@@ -173,6 +172,7 @@ const Home: React.FC = () => {
                                             date={new Date(day.dt * 1000)}
                                             time={false}
                                             data={day.temp.min + '°C/' + day.temp.max + '°C'}
+                                            temp={day.temp.max > 25 ? 'hot' : day.temp.max < 20 ? 'cold' : null}
                                             icon={day.weather[0].id}
                                             description={day.weather[0].description}
                                         />
@@ -190,7 +190,7 @@ const Home: React.FC = () => {
                                             date={new Date(hour.dt * 1000)}
                                             time={true}
                                             data={hour.temp + '°C'}
-                                            temp={hour.temp > 35 ? 'hot' : hour.temp < 20 ? 'cold' : null}
+                                            temp={hour.temp > 25 ? 'hot' : hour.temp < 20 ? 'cold' : null}
                                             icon={hour.weather[0].id}
                                             description={hour.weather[0].description}
                                         />

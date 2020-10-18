@@ -129,8 +129,7 @@ const Search: React.FC = () => {
                 setLoading(false);
             } catch (err) {
                 setLoading(false);
-                console.error(err);
-                setError('No weather data found! Try again later');
+                setError('Could not find any weather data! Try again later');
             }
         })();
 
@@ -151,6 +150,7 @@ const Search: React.FC = () => {
                                 date={new Date(weather.timestamp * 1000)}
                                 time={false}
                                 data={weather.main.temp + '°C'}
+                                temp={weather.main.temp > 25 ? 'hot' : weather.main.temp < 20 ? 'cold' : null}
                                 icon={weather.icon}
                                 description={weather.description}
                             />
@@ -165,6 +165,7 @@ const Search: React.FC = () => {
                                             date={new Date(day.dt * 1000)}
                                             time={false}
                                             data={day.temp.min + '°C/' + day.temp.max + '°C'}
+                                            temp={day.temp.max > 25 ? 'hot' : day.temp.max < 20 ? 'cold' : null}
                                             icon={day.weather[0].id}
                                             description={day.weather[0].description}
                                         />
@@ -182,6 +183,7 @@ const Search: React.FC = () => {
                                             date={new Date(hour.dt * 1000)}
                                             time={true}
                                             data={hour.temp + '°C'}
+                                            temp={hour.temp > 25 ? 'hot' : hour.temp < 20 ? 'cold' : null}
                                             icon={hour.weather[0].id}
                                             description={hour.weather[0].description}
                                         />
@@ -209,10 +211,10 @@ const Search: React.FC = () => {
                         </div>
                     </>
                 ) : (
-                        <div className='error'>
-                            <h2>{error}</h2>
-                        </div>
-                    )
+                    <div className='error'>
+                        <h2>{error}</h2>
+                    </div>
+                )
             }
         </Wrapper>
     ) : (
