@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import Loader from '../components/Loader';
 import Card from '../components/Card';
+import LeftArrow from '../assets/left-arrow.svg';
+import RightArrow from '../assets/right-arrow.svg';
 
 const Wrapper = styled.div`
     min-height: 85vh;
@@ -13,20 +16,33 @@ const Wrapper = styled.div`
         text-align: center;
     }
 
-    img {
-        cursor: pointer;
-        width: 3rem;
-        height: 3rem;
-    }
-
     .main, .wind, .humidity {
         display: grid;
         justify-content: center;
     }
 
+    .slider {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        justify-content: center;
+        align-items: center;
+
+        .slider-background {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        img {
+            cursor: pointer;
+            width: 4rem;
+            height: 4rem;
+        }
+    }
+
     .forecast-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(10rem, 10rem));
+        grid-template-columns: repeat(auto-fit, 10rem);
+        grid-auto-flow: column;
         column-gap: 2rem;
         justify-content: center;
     }
@@ -100,6 +116,8 @@ const Home: React.FC = () => {
     const [ forecast, setForecast ] = useState<Forecast | null>(null);
     const [ loading, setLoading ] = useState<boolean>(true);
     const [ error, setError ] = useState<string>('');
+    const [ dailyForecastGrid, setDailyForecastGrid ] = useState<number>(0);
+    const [ hourlyForecastGrid, setHourlyForecastGrid ] = useState<number>(0);
 
     useEffect(() => {
         if (!navigator.geolocation) setError('Geolocation not supported in this browser! Try searching for a city instead');
@@ -164,38 +182,84 @@ const Home: React.FC = () => {
                         </div>
                         <div className='daily-forecast'>
                             <h2>Daily Forecast</h2>
-                            <div className='forecast-grid'>
-                                {
-                                    forecast.daily.map(day => (
-                                        <Card
-                                            key={day.dt}
-                                            date={new Date(day.dt * 1000)}
-                                            time={false}
-                                            data={day.temp.min + '°C/' + day.temp.max + '°C'}
-                                            temp={day.temp.max > 25 ? 'hot' : day.temp.max < 20 ? 'cold' : null}
-                                            icon={day.weather[0].id}
-                                            description={day.weather[0].description}
-                                        />
-                                    ))
-                                }
+                            <div className='slider'>
+                                <motion.img
+                                    src={LeftArrow} 
+                                    alt='Left slider arrow'
+                                    onTap={() => {
+                                        if (dailyForecastGrid <= forecast.daily.length / 2 - 1) setDailyForecastGrid(dailyForecastGrid + 1);
+                                    }}
+                                />
+                                <div className='slider-background'>
+                                    <motion.div
+                                        initial={false}
+                                        animate={{ transform: `translateX(${dailyForecastGrid * 10}rem)` }}
+                                        transition={{ duration: 0.25 }}
+                                        className='forecast-grid'
+                                    >
+                                        {
+                                            forecast.daily.map(day => (
+                                                <Card
+                                                    key={day.dt}
+                                                    date={new Date(day.dt * 1000)}
+                                                    time={false}
+                                                    data={day.temp.min + '°C/' + day.temp.max + '°C'}
+                                                    temp={day.temp.max > 25 ? 'hot' : day.temp.max < 20 ? 'cold' : null}
+                                                    icon={day.weather[0].id}
+                                                    description={day.weather[0].description}
+                                                />
+                                            ))
+                                        }
+                                    </motion.div>
+                                </div>
+                                <motion.img
+                                    src={RightArrow}
+                                    alt='Right slider arrow'
+                                    onTap={() => {
+                                        if (dailyForecastGrid >= - forecast.daily.length / 2 + 1) setDailyForecastGrid(dailyForecastGrid - 1);
+                                    }}
+                                />
                             </div>
                         </div>
                         <div className='hourly-forecast'>
                             <h2>Hourly Forecast</h2>
-                            <div className='forecast-grid'>
-                                {
-                                    forecast.hourly.map(hour => (
-                                        <Card
-                                            key={hour.dt}
-                                            date={new Date(hour.dt * 1000)}
-                                            time={true}
-                                            data={hour.temp + '°C'}
-                                            temp={hour.temp > 25 ? 'hot' : hour.temp < 20 ? 'cold' : null}
-                                            icon={hour.weather[0].id}
-                                            description={hour.weather[0].description}
-                                        />
-                                    ))
-                                }
+                            <div className='slider'>
+                                <motion.img
+                                    src={LeftArrow}
+                                    alt='Left slider arrow'
+                                    onTap={() => {
+                                        if (hourlyForecastGrid <= forecast.hourly.length / 2 - 1) setHourlyForecastGrid(hourlyForecastGrid + 1);
+                                    }}
+                                />
+                                <div className='slider-background'>
+                                    <motion.div
+                                        initial={false}
+                                        animate={{ transform: `translateX(${hourlyForecastGrid * 10}rem)` }}
+                                        transition={{ duration: 0.25 }}
+                                        className='forecast-grid'
+                                    >
+                                        {
+                                            forecast.hourly.map(hour => (
+                                                <Card
+                                                    key={hour.dt}
+                                                    date={new Date(hour.dt * 1000)}
+                                                    time={true}
+                                                    data={hour.temp + '°C'}
+                                                    temp={hour.temp > 25 ? 'hot' : hour.temp < 20 ? 'cold' : null}
+                                                    icon={hour.weather[0].id}
+                                                    description={hour.weather[0].description}
+                                                />
+                                            ))
+                                        }
+                                    </motion.div>
+                                </div>
+                                <motion.img
+                                    src={RightArrow}
+                                    alt='Right slider arrow'
+                                    onTap={() => {
+                                        if (hourlyForecastGrid >= - forecast.hourly.length / 2 + 1) setHourlyForecastGrid(hourlyForecastGrid - 1);
+                                    }}
+                                />
                             </div>
                         </div>
                         <div className='wind'>
