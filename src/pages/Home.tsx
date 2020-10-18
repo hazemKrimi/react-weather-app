@@ -139,6 +139,11 @@ const Home: React.FC = () => {
                 setError('Geolocation not active! Try searching for a city instead');
             }
         );
+
+        return () => {
+            setError('');
+            setLoading(true);
+        }
         // eslint-disable-next-line
     }, []);
 

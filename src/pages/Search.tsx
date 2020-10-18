@@ -133,6 +133,11 @@ const Search: React.FC = () => {
                 setError('No weather data found! Try again later');
             }
         })();
+
+        return () => {
+            setError('');
+            setLoading(true);
+        }
     }, [query]);
 
     return !loading ? (
