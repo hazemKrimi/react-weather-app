@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
@@ -27,7 +27,7 @@ const App: React.FC = () => {
             <Search />
           </Route>
           <Route path='/search'>
-            <Search />
+            <Redirect to='/home' />
           </Route>
           <Route path='*' exact>
             <NotFound />
