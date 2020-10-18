@@ -9,6 +9,7 @@ const GlobalStyles = createGlobalStyle`
         outline: none;
         font-family: 'Poppins';
         color: #000000;
+        overflow: hidden;
     }
 `;
 
