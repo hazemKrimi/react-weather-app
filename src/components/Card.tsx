@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
     border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.13);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
     display: grid;
     grid-template-rows: auto;
     row-gap: 0.5rem;
