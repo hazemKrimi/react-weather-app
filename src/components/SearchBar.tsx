@@ -18,6 +18,7 @@ const Wrapper = styled.div`
 const Input = styled.input`
     border: none;
     border-radius: 5px;
+    overflow: hidden;
 
     &::placeholder {
         color: rgba(0, 0, 0, 0.5);
