@@ -11,32 +11,32 @@ import './css/weather-icons.min.css';
 import './css/weather-icons-wind.min.css';
 
 const App: React.FC = () => {
-  return (
-    <>
-      <GlobalStyles />
-      <Container>
-        <NavBar />
-        <Switch>
-          <Route path='/' exact>
-            <Home />
-          </Route>
-          <Route path='/home' exact>
-            <Home />
-          </Route>
-          <Route path='/search/:query'>
-            <Search />
-          </Route>
-          <Route path='/search'>
-            <Redirect to='/home' />
-          </Route>
-          <Route path='*' exact>
-            <NotFound />
-          </Route>
-        </Switch>
-        <Footer />
-      </Container>
-    </>
-  );
-}
+	return (
+		<>
+			<GlobalStyles />
+			<Container>
+				<NavBar />
+				<Switch>
+					<Route path='/' exact>
+						<Home />
+					</Route>
+					<Route path='/home' exact>
+						<Home />
+					</Route>
+					<Route path='/search/:query'>
+						<Search />
+					</Route>
+					<Route path='/search'>
+						<Redirect to='/home' />
+					</Route>
+					<Route path='*' exact>
+						<NotFound />
+					</Route>
+				</Switch>
+				<Footer />
+			</Container>
+		</>
+	);
+};
 
 export default App;
