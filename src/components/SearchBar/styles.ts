@@ -16,6 +16,7 @@ export const Input = styled.input`
 	border: none;
 	border-radius: 5px;
 	overflow: hidden;
+	user-select: text !important;
 
 	&::placeholder {
 		color: rgba(0, 0, 0, 0.5);

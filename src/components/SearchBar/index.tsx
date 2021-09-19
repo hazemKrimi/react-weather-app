@@ -8,7 +8,7 @@ const SearchBar: React.FC = () => {
 	const history = useHistory();
 
 	const search = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter' && query !== '') {
+		if ((event.key === 'Enter' || event.keyCode === 13) && query !== '') {
 			history.push(`/search/${query}`);
 			setQuery('');
 		}
@@ -19,7 +19,7 @@ const SearchBar: React.FC = () => {
 			<Input
 				placeholder='Search'
 				value={query}
-				onKeyPress={search}
+				onKeyUp={search}
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
 			/>
 			<img src={SearchIcon} alt='Search icon' />
