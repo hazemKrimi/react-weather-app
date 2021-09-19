@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	width: 100%;
+	width: 200px;
 	padding: 1rem;
 	margin: 1rem 0rem;
 	word-wrap: break-word;

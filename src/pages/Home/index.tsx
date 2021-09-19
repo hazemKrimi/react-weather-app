@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+// @ts-ignore
+import Carousel, { consts } from 'react-elastic-carousel';
 import { Wrapper } from './styles';
 import { Weather, WeatherResponse } from '../../types/weather';
 import { Forecast, ForecastResponse } from '../../types/forecast';
@@ -13,8 +14,36 @@ const Home: React.FC = () => {
 	const [forecast, setForecast] = useState<Forecast | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
-	const [dailyForecastGrid, setDailyForecastGrid] = useState<number>(0);
-	const [hourlyForecastGrid, setHourlyForecastGrid] = useState<number>(0);
+
+	const carouselSettings = {
+		pagination: false,
+		itemsToShow: 1,
+		enableSwipe: true,
+		isRTL: false,
+		disableArrowsOnEnd: true,
+		enableTilt: false,
+		renderArrow: ({
+			type,
+			onClick,
+			isEdge
+		}: {
+			type: string;
+			onClick: () => void;
+			isEdge: boolean;
+		}) => (
+			<>
+				{type !== consts.PREV ? (
+					<button onClick={onClick} disabled={isEdge} type='button' className='carousel-arrow'>
+						<img src={RightArrow} alt='Left slider arrow' />
+					</button>
+				) : (
+					<button onClick={onClick} disabled={isEdge} type='button' className='carousel-arrow'>
+						<img src={LeftArrow} alt='Right slider arrow' />
+					</button>
+				)}
+			</>
+		)
+	};
 
 	useEffect(() => {
 		if (!navigator.geolocation)
@@ -82,93 +111,35 @@ const Home: React.FC = () => {
 					</div>
 					<div className='daily-forecast'>
 						<h2>Daily Forecast</h2>
-						<div className='slider'>
-							<motion.img
-								src={LeftArrow}
-								alt='Left slider arrow'
-								onTap={() => {
-									if (dailyForecastGrid <= forecast.daily.length / 2 - 1)
-										setDailyForecastGrid(dailyForecastGrid + 1);
-								}}
-								onMouseDown={() => {
-									if (dailyForecastGrid <= forecast.daily.length / 2 - 1)
-										setDailyForecastGrid(dailyForecastGrid + 1);
-								}}
-							/>
-							<div className='slider-background'>
-								<motion.div
-									initial={false}
-									animate={{ transform: `translateX(${dailyForecastGrid * 10}rem)` }}
-									transition={{ duration: 0.25 }}
-									className='forecast-grid'
-								>
-									{forecast.daily.map(day => (
-										<Card
-											key={day.dt}
-											date={new Date(day.dt * 1000)}
-											time={false}
-											data={day.temp.min + '°C/' + day.temp.max + '°C'}
-											temp={day.temp.max > 25 ? 'hot' : day.temp.max < 20 ? 'cold' : null}
-											icon={day.weather[0].id}
-											description={day.weather[0].description}
-										/>
-									))}
-								</motion.div>
-							</div>
-							<motion.img
-								src={RightArrow}
-								alt='Right slider arrow'
-								onTap={() => {
-									if (dailyForecastGrid >= -forecast.daily.length / 2 + 1)
-										setDailyForecastGrid(dailyForecastGrid - 1);
-								}}
-								onMouseDown={() => {
-									if (dailyForecastGrid >= -forecast.daily.length / 2 + 1)
-										setDailyForecastGrid(dailyForecastGrid - 1);
-								}}
-							/>
-						</div>
+						<Carousel {...carouselSettings}>
+							{forecast.daily.map(day => (
+								<Card
+									key={day.dt}
+									date={new Date(day.dt * 1000)}
+									time={false}
+									data={day.temp.min + '°C/' + day.temp.max + '°C'}
+									temp={day.temp.max > 25 ? 'hot' : day.temp.max < 20 ? 'cold' : null}
+									icon={day.weather[0].id}
+									description={day.weather[0].description}
+								/>
+							))}
+						</Carousel>
 					</div>
 					<div className='hourly-forecast'>
 						<h2>Hourly Forecast</h2>
-						<div className='slider'>
-							<motion.img
-								src={LeftArrow}
-								alt='Left slider arrow'
-								onTap={() => {
-									if (hourlyForecastGrid <= forecast.hourly.length / 2 - 1)
-										setHourlyForecastGrid(hourlyForecastGrid + 1);
-								}}
-							/>
-							<div className='slider-background'>
-								<motion.div
-									initial={false}
-									animate={{ transform: `translateX(${hourlyForecastGrid * 10}rem)` }}
-									transition={{ duration: 0.25 }}
-									className='forecast-grid'
-								>
-									{forecast.hourly.map(hour => (
-										<Card
-											key={hour.dt}
-											date={new Date(hour.dt * 1000)}
-											time={true}
-											data={hour.temp + '°C'}
-											temp={hour.temp > 25 ? 'hot' : hour.temp < 20 ? 'cold' : null}
-											icon={hour.weather[0].id}
-											description={hour.weather[0].description}
-										/>
-									))}
-								</motion.div>
-							</div>
-							<motion.img
-								src={RightArrow}
-								alt='Right slider arrow'
-								onTap={() => {
-									if (hourlyForecastGrid >= -forecast.hourly.length / 2 + 1)
-										setHourlyForecastGrid(hourlyForecastGrid - 1);
-								}}
-							/>
-						</div>
+						<Carousel {...carouselSettings}>
+							{forecast.hourly.map(hour => (
+								<Card
+									key={hour.dt}
+									date={new Date(hour.dt * 1000)}
+									time={true}
+									data={hour.temp + '°C'}
+									temp={hour.temp > 25 ? 'hot' : hour.temp < 20 ? 'cold' : null}
+									icon={hour.weather[0].id}
+									description={hour.weather[0].description}
+								/>
+							))}
+						</Carousel>
 					</div>
 					<div className='wind'>
 						<h2>Wind</h2>

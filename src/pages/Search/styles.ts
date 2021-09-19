@@ -17,30 +17,17 @@ export const Wrapper = styled.div`
 		justify-content: center;
 	}
 
-	.slider {
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		justify-content: center;
-		align-items: center;
-
-		.slider-background {
-			width: 100%;
-			overflow: hidden;
-		}
+	.carousel-arrow {
+		background: none;
+		border: none;
+		align-self: center;
+		cursor: pointer;
+		padding: 0 !important;
 
 		img {
-			cursor: pointer;
-			width: 4rem;
-			height: 4rem;
+			width: 48px;
+			height: 48px;
 		}
-	}
-
-	.forecast-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, 10rem);
-		grid-auto-flow: column;
-		column-gap: 2rem;
-		justify-content: center;
 	}
 
 	.error {
