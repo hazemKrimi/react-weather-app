@@ -6,20 +6,24 @@ export const Wrapper = styled.div`
 	align-items: center;
 	padding: 0.5rem 0rem;
 
+	a {
+		text-decoration: none;
+	}
+
 	p {
 		justify-self: flex-start;
 	}
 
 	.contact {
 		display: grid;
-		grid-template-columns: repeat(3, 24px);
-		column-gap: 0.25rem;
+		grid-template-columns: repeat(3, 16px);
+		column-gap: 0.5rem;
 		align-items: center;
 		justify-content: flex-end;
 
 		img {
-			width: 24px;
-			height: 24px;
+			width: 16px;
+			height: 16px;
 		}
 	}
 `;
