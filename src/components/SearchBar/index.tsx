@@ -22,7 +22,13 @@ const SearchBar: React.FC = () => {
 				onKeyUp={search}
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
 			/>
-			<img src={SearchIcon} alt='Search icon' />
+			<img
+				src={SearchIcon}
+				alt='Search icon'
+				onClick={() => {
+					if (query !== '') history.push(`/search/${query}`);
+				}}
+			/>
 		</Wrapper>
 	);
 };

@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
 	border-radius: 5px;
 	justify-self: flex-end;
 	padding: 0.2rem 0.5rem;
+
+	img {
+		cursor: pointer;
+	}
 `;
 
 export const Input = styled.input`
